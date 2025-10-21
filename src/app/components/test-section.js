@@ -2,18 +2,25 @@
 
 import { useState } from "react";
 import { Card, Select, Input, Button, Typography, message } from "antd";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import GradientHeart from "./hearth";
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const cheerWords = [
-  "Сайхан байна! 😄",
-  "Маш сайн! 🎉",
-  "Амжилт хүсье! 🌟",
-  "Гайхалтай! 💪",
-  "Танд амжилт! 🏆",
+  "Ёооё лаажийн шдээ! 😄",
+  "Мундаг шүү! 🥰",
+  "Чи минь хамгийн хөөрхөн! 🌟",
+  "Гайхалтай, ямар гоё шаачваа! 💪",
+  "Пүү лаажийн шдээ хайраа! 🏆",
+  "Гал2! 🔥",
+  "Чи минь ухаантай шүү! 😚",
+  "Чи минь хүчтэй болжийн шүү! 🥰",
+  "Миний сайхнаа! 🎉",
+  "Пүүү, ийм мундаг! 🌟",
+  "Хөөрхөн шдээ! 😘",
+  "Ухаантай охин шүү! 😇",
 ];
 
 export default function TestSection({ wordExplanations }) {
@@ -23,7 +30,6 @@ export default function TestSection({ wordExplanations }) {
   const [answers, setAnswers] = useState({});
   const [checkedWords, setCheckedWords] = useState({});
   const [errorWords, setErrorWords] = useState({});
-  const [showIconWord, setShowIconWord] = useState(null);
 
   const handleInputChange = (word, value) => {
     setAnswers((prev) => ({ ...prev, [word]: value }));

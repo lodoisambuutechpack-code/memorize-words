@@ -53,7 +53,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gray-50">
+    <main className="min-h-screen flex flex-col items-center p-8 bg-gray-50">
       <div className="w-full max-w-3xl bg-white p-6 rounded-xl shadow-sm">
         <Tabs
           defaultActiveKey="1"
