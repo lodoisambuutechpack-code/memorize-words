@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Select, Input, Button, Typography, message } from "antd";
-import { motion } from "framer-motion";
+import { Card, Select, Input, Button, Typography } from "antd";
+import { motion, AnimatePresence } from "framer-motion";
 import GradientHeart from "./hearth";
+import { Toast } from "./toast";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -25,11 +26,11 @@ const cheerWords = [
 
 export default function TestSection({ wordExplanations }) {
   const words = Object.keys(wordExplanations);
-
   const [selectedWords, setSelectedWords] = useState([]);
   const [answers, setAnswers] = useState({});
   const [checkedWords, setCheckedWords] = useState({});
   const [errorWords, setErrorWords] = useState({});
+  const [toast, setToast] = useState(null);
 
   const handleInputChange = (word, value) => {
     setAnswers((prev) => ({ ...prev, [word]: value }));
@@ -42,20 +43,16 @@ export default function TestSection({ wordExplanations }) {
     const correctAnswer = (wordExplanations[word] || "").trim().toLowerCase();
 
     if (!userInput) {
-      message.warning("Хариулт бичнэ үү!");
+      setToast("Хариулт бичнэ үү!");
       return;
     }
 
-    if (userInput === correctAnswer) {
+    if (userInput?.toLowerCase() === correctAnswer?.toLowerCase()) {
       const randomCheer =
         cheerWords[Math.floor(Math.random() * cheerWords.length)];
-      message.success(`Зөв! 🎉 ${randomCheer}`);
-
       setCheckedWords((prev) => ({ ...prev, [word]: true }));
       setErrorWords((prev) => ({ ...prev, [word]: false }));
-      //   setShowIconWord(word);
-
-      //   setTimeout(() => setShowIconWord(null), 1500);
+      setToast(randomCheer);
     } else {
       setCheckedWords((prev) => ({ ...prev, [word]: false }));
       setErrorWords((prev) => ({ ...prev, [word]: true }));
@@ -64,6 +61,10 @@ export default function TestSection({ wordExplanations }) {
 
   return (
     <Card title="🧠 Үгийн тест">
+      <AnimatePresence>
+        {toast && <Toast message={toast} onClose={() => setToast(null)} />}
+      </AnimatePresence>
+
       {words.length === 0 ? (
         <Text type="secondary">Хадгалагдсан үг алга байна.</Text>
       ) : (
@@ -116,7 +117,6 @@ export default function TestSection({ wordExplanations }) {
                 )}
               </div>
 
-              {/* Gradient Heart with multiple outlines, aligned with input/button */}
               <div
                 style={{
                   position: "relative",
@@ -131,11 +131,7 @@ export default function TestSection({ wordExplanations }) {
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1.2, opacity: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 15,
-                    }}
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
                     style={{ position: "absolute" }}
                   >
                     <GradientHeart />
