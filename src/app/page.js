@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 import Notes from "./components/notes";
 import SavedWordList from "./components/saved-word-list";
 import TestSection from "./components/test-section";
+import Welcome from "./components/welcome";
 
 export default function Home() {
   const [wordExplanations, setWordExplanations] = useState({});
+  const [showWelcome, setShowWelcome] = useState(true);
 
   // Анх ачаалах
   useEffect(() => {
@@ -54,6 +56,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center p-8 bg-gray-50">
+      {showWelcome && (
+        <Welcome
+          name="Лхагвасүрэн"
+          profileUrl="/profile.png"
+          duration={3000} // 3 секунд харуулах
+        />
+      )}
       <div className="w-full max-w-3xl bg-white p-6 rounded-xl shadow-sm">
         <Tabs
           defaultActiveKey="1"
