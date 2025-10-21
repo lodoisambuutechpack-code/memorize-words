@@ -12,13 +12,11 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
   const [modalWord, setModalWord] = useState(); // аль үг дээр modal нээхийг заана
   const [modalValue, setModalValue] = useState("");
 
-  // Notes-ийг localStorage-с ачаалах
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("notes") || "[]");
     setNotes(storedNotes);
   }, []);
 
-  // Notes-ийг хадгалах
   const saveNotes = (updated) => {
     setNotes(updated);
     localStorage.setItem("notes", JSON.stringify(updated));
@@ -36,7 +34,6 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
     saveNotes(updated);
   };
 
-  // Modal хадгалах
   const handleSaveExplanation = () => {
     if (!modalWord) return;
     const updatedExplanations = {
@@ -48,11 +45,9 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
       "wordExplanations",
       JSON.stringify(updatedExplanations)
     );
-    // message.success(`"${modalWord}" үгийн тайлбар хадгалагдлаа!`);
     setModalWord(null);
   };
 
-  // Үг дээр дарахад Modal нээх
   const handleOpenModal = (word) => {
     setModalWord(word);
     setModalValue(wordExplanations[word] || "");
@@ -67,8 +62,13 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
           backgroundColor: wordExplanations[word] ? "#fff7e6" : "inherit",
           padding: "0 2px",
           borderRadius: 4,
+          display: "inline-block",
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-all", // урт үг таслагдана
+          overflowWrap: "anywhere", // үг хэтэрвэл мөр тасална
+          maxWidth: "100%",
         }}
-        onClick={() => handleOpenModal(word)} // ✅ ганц click → modal нээгдэнэ
+        onClick={() => handleOpenModal(word)}
       >
         {word}
       </Text>
@@ -76,7 +76,7 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: "0px auto" }}>
+    <div style={{ maxWidth: 700, margin: "0 auto" }}>
       <Card title="📝 Миний тэмдэглэлүүд">
         <Space.Compact style={{ width: "100%", marginBottom: 10 }}>
           <TextArea
@@ -107,7 +107,13 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
                 </Button>,
               ]}
             >
-              <div style={{ wordBreak: "break-word" }}>
+              <div
+                style={{
+                  wordBreak: "break-word",
+                  whiteSpace: "pre-wrap",
+                  overflowWrap: "anywhere",
+                }}
+              >
                 {note.text
                   .split(/\s+/)
                   .map((word, i) => getWordWithModal(word, i))}

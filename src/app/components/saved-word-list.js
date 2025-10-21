@@ -18,7 +18,7 @@ export default function SavedWordList({
     delete updated[word];
     setWordExplanations(updated);
     localStorage.setItem("wordExplanations", JSON.stringify(updated));
-    message.success(`"${word}" устгагдлаа`);
+    // message.success(`"${word}" устгагдлаа`);
   };
 
   // Шинэ үг нэмэх function
