@@ -41,13 +41,11 @@ export default function TestSection({ wordExplanations }) {
   const handleCheck = (word) => {
     const userInput = (answers[word] || "").trim().toLowerCase();
     const correctAnswer = (wordExplanations[word] || "").trim().toLowerCase();
-
     if (!userInput) {
       setToast("Хариулт бичнэ үү!");
       return;
     }
-
-    if (userInput?.toLowerCase() === correctAnswer?.toLowerCase()) {
+    if (userInput === correctAnswer) {
       const randomCheer =
         cheerWords[Math.floor(Math.random() * cheerWords.length)];
       setCheckedWords((prev) => ({ ...prev, [word]: true }));
@@ -60,7 +58,7 @@ export default function TestSection({ wordExplanations }) {
   };
 
   return (
-    <Card title="🧠 Үгийн тест">
+    <Card title="🧠 Шинэ үг шалгах" style={{ maxWidth: 480, margin: "0 auto" }}>
       <AnimatePresence>
         {toast && <Toast message={toast} onClose={() => setToast(null)} />}
       </AnimatePresence>
@@ -70,6 +68,7 @@ export default function TestSection({ wordExplanations }) {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <Text>Шинэ үгнүүдээс хэд хэд сонгоно уу:</Text>
+
           <Select
             mode="multiple"
             placeholder="Үгнүүдийг сонгоно уу"
@@ -97,51 +96,48 @@ export default function TestSection({ wordExplanations }) {
             <div
               key={word}
               style={{
-                display: "grid",
-                gridTemplateColumns: "150px 1fr 50px 120px",
+                display: "flex",
+                flexDirection: "column",
                 gap: 8,
-                alignItems: "center",
+                border: "1px solid #f0f0f0",
+                padding: 12,
+                borderRadius: 8,
               }}
             >
-              <Text>{word}</Text>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <Input
-                  placeholder="Хариулт бичнэ үү"
-                  value={answers[word] || ""}
-                  onChange={(e) => handleInputChange(word, e.target.value)}
-                />
-                {errorWords[word] && (
-                  <Text style={{ color: "orange", fontSize: 12 }}>
-                    Та дахин оролдно уу 😚
-                  </Text>
-                )}
-              </div>
+              <Text strong>{word}</Text>
 
-              <div
-                style={{
-                  position: "relative",
-                  width: 40,
-                  height: 40,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <Input
+                placeholder="Хариулт бичнэ үү"
+                value={answers[word] || ""}
+                onChange={(e) => handleInputChange(word, e.target.value)}
+              />
+
+              {errorWords[word] && (
+                <Text style={{ color: "orange", fontSize: 12 }}>
+                  Та дахин оролдно уу 😚
+                </Text>
+              )}
+
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <Button
+                  type="primary"
+                  onClick={() => handleCheck(word)}
+                  style={{ flex: 1 }}
+                >
+                  Шалгах
+                </Button>
+
                 {checkedWords[word] && (
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1.2, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                    style={{ position: "absolute" }}
+                    style={{ width: 40, height: 40 }}
                   >
                     <GradientHeart />
                   </motion.div>
                 )}
               </div>
-
-              <Button type="primary" onClick={() => handleCheck(word)}>
-                Шалгах
-              </Button>
             </div>
           ))}
         </div>

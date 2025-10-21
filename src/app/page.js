@@ -49,7 +49,7 @@ export default function Home() {
     },
     {
       key: "3",
-      label: "🧠 Тест бөглөх",
+      label: "🧠 Шинэ үгээ шалгах",
       children: <TestSection wordExplanations={wordExplanations} />,
     },
   ];
