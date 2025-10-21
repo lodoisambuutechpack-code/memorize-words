@@ -77,7 +77,7 @@ export default function Notes({ wordExplanations, setWordExplanations }) {
 
   return (
     <div style={{ maxWidth: 700, margin: "0 auto" }}>
-      <Card title="📝 Миний тэмдэглэлүүд">
+      <Card title="📝 Та CFA текст оруулж англи үгээ цээжилнэ үү.">
         <Space.Compact style={{ width: "100%", marginBottom: 10 }}>
           <TextArea
             placeholder="Шинэ тэмдэглэлээ бичнэ үү..."
