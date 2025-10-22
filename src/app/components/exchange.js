@@ -88,7 +88,7 @@ export default function Exchange() {
           "YYYYMMDD"
         )}.xlsx`
       );
-      alert(`Excel файл татагдлаа (${allResults.length} мөр)`);
+      console.log(allResults);
     } else {
       alert("Өгөгдөл олдсонгүй");
     }
