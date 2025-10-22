@@ -7,6 +7,7 @@ import Notes from "./components/notes";
 import SavedWordList from "./components/saved-word-list";
 import TestSection from "./components/test-section";
 import Welcome from "./components/welcome";
+import Exchange from "./components/exchange";
 
 export default function Home() {
   const [wordExplanations, setWordExplanations] = useState({});
@@ -51,6 +52,11 @@ export default function Home() {
       key: "3",
       label: "🧠 Шинэ үгээ шалгах",
       children: <TestSection wordExplanations={wordExplanations} />,
+    },
+    {
+      key: "4",
+      label: "💵 Golomt exchange",
+      children: <Exchange />,
     },
   ];
 
